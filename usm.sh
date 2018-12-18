@@ -4,20 +4,20 @@
 DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
-INSTANCES_FILE="$HOME/.simple-ssh/data/instances"
+INSTANCES_FILE="$HOME/.usm/data/instances"
 
-if [ ! -d "$HOME/.simple-ssh" ]; then
-	mkdir $HOME/.simple-ssh
+if [ ! -d "$HOME/.usm" ]; then
+	mkdir $HOME/.usm
 fi
 ##Code for temp file if needed
-#if [ ! -d "$HOME/.simple-ssh/temp" ]; then
-#	mkdir $HOME/.simple-ssh
+#if [ ! -d "$HOME/.usm/temp" ]; then
+#	mkdir $HOME/.usm
 #fi
-if [ ! -d "$HOME/.simple-ssh/data" ]; then
-	mkdir $HOME/.simple-ssh/data
+if [ ! -d "$HOME/.usm/data" ]; then
+	mkdir $HOME/.usm/data
 fi
-if [ ! -e "$HOME/.simple-ssh/data/instances" ]; then
-	touch $HOME/.simple-ssh/data/instances
+if [ ! -e "$HOME/.usm/data/instances" ]; then
+	touch $HOME/.usm/data/instances
 fi
 
 declare -a instances
@@ -38,9 +38,9 @@ ssh_add() {
 	ADDRESS=$address
 	instances+=("$USERNAME"@"$ADDRESS")
 	##Currently unused alternative method
-	#sed -i -e 1's/$/ "$username"' "$HOME/.simple-ssh/instances"
-	#sed -i -e 2's/$/ "$address"' "$HOME/.simple-ssh/instances"
-	echo "${instances[*]}" > "$HOME/.simple-ssh/data/instances"
+	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
+	#sed -i -e 2's/$/ "$address"' "$HOME/.usm/instances"
+	echo "${instances[*]}" > "$HOME/.usm/data/instances"
 	read -r -p "$(echo -e 'Instance added. Add another? (Y/n)')" answer
 	case "$answer" in
 		[yY]|[Yy][Ee][Ss] ) menu_check;;
