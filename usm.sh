@@ -29,8 +29,6 @@ read -a instances <"$INSTANCES_FILE"
 #ARRAY_SIZE=${#instances[*]}
 #echo "Array size is "$ARRAY_SIZE
 
-DIR="$(cd "$(dirname "$0")" && pwd)"
-
 while getopts ahi:rs:v option
 	do
 		case "$option" in
