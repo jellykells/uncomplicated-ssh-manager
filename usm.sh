@@ -1,6 +1,7 @@
 #!/bin/bash
 ##Currently unused include
 #. $HOME/Documents/sshmanagerfunctions.sh
+VERSION="Uncomplicated SSH Manager v1.0"
 DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
@@ -29,6 +30,18 @@ read -a instances <"$INSTANCES_FILE"
 #echo "Array size is "$ARRAY_SIZE
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
+
+while getopts ahi:rs:v option
+	do
+		case "$option" in
+			a ) ssh_add;;
+			h ) help;;
+			i ) echo "Option 'i' read successfully."; exit;;
+			r ) echo "Option 'r' read successfully."; exit;;
+			s ) echo "Option 's' read successfully."; exit;;
+			v ) echo $VERSION;;
+		esac
+	done
 
 ssh_add() {
 	LASTMENU="ssh_add"
