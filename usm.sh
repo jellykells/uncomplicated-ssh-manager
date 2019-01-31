@@ -37,7 +37,7 @@ while getopts ahi:rs:v option
 			i ) echo "Option 'i' read successfully."; exit;;
 			r ) echo "Option 'r' read successfully."; exit;;
 			s ) echo "Option 's' read successfully."; exit;;
-			v ) echo $VERSION;;
+			v ) echo $VERSION; exit;;
 		esac
 	done
 
