@@ -56,9 +56,10 @@ ssh_remove() {
 	done
 	read -r -p "" selection
 	if [[ "$selection" < "${#instances[*]}" ]]; then
-		read -r -p "Delete '${instances[$selection]}'? (Y/n) \n" answer
+		SELECTION="$selection"
+		read -r -p "Delete '${instances[$selection]}'? (Y/n)" answer
 		case "$answer" in
-			[yY]|[Yy][Ee][Ss] ) instances=( "${instances[@]/$selection}" ) && echo "Instance removed.";;
+			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/$SELECTION} ) && echo "Instance removed.";;
 			[Nn]|[Nn][Oo] ) menu_check;;
 		esac
 	else
@@ -98,7 +99,7 @@ ssh_start() {
 		echo [$i] ${instances[$i]}
 	done
 	read -r -p "" selection
-	if [[ "$selection" < "${#instances[*]}" ]]; then
+	if [[ "$selection" < "${#instances[@]}" ]]; then
 		echo -e "Starting session... \n"
 		ssh "${instances[$selection]}"
 	else
