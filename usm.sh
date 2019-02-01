@@ -29,12 +29,11 @@ read -a instances <"$INSTANCES_FILE"
 #ARRAY_SIZE=${#instances[*]}
 #echo "Array size is "$ARRAY_SIZE
 
-while getopts ahi:rs:v option
+while getopts ahrsv option
 	do
 		case "$option" in
 			a ) ssh_add;;
 			h ) help;;
-			i ) echo "Option 'i' read successfully."; exit;;
 			r ) echo "Option 'r' read successfully."; exit;;
 			s ) echo "Option 's' read successfully."; exit;;
 			v ) echo $VERSION; exit;;
