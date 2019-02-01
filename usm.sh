@@ -102,7 +102,7 @@ ssh_start() {
 	done
 	read -r -p "" selection
 	if [[ "$selection" < "${#instances[@]}" ]]; then
-		echo -e "Starting session... \n"
+		echo -e "Starting session… \n"
 		ssh "${instances[$selection]}"
 	else
 		invalid_input
