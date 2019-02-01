@@ -80,7 +80,7 @@ main_menu() {
 		[1] ) ssh_start;;
 		[2] ) ssh_add;;
 		[3] ) ssh_remove;;
-		[4] ) close;;
+		[4] ) exit 0;;
 		*   ) invalid_input;;
 	esac
 }
@@ -96,7 +96,7 @@ close() {
 
 input_attempts_max() {
 	echo -e "Maximum input attempts exceeded.\nPlease ensure all your fingers are intact and try again, User.";
-	close;
+	exit 0;
 	}
 
 ssh_start() {
