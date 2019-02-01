@@ -29,17 +29,6 @@ read -a instances <"$INSTANCES_FILE"
 #ARRAY_SIZE=${#instances[*]}
 #echo "Array size is "$ARRAY_SIZE
 
-while getopts ahrsv option
-	do
-		case "$option" in
-			a ) ssh_add;;
-			h ) help; exit;;
-			r ) echo "Option 'r' read successfully."; exit;;
-			s ) ssh_start;;
-			v ) echo $VERSION; exit;;
-		esac
-	done
-
 ssh_add() {
 	LASTMENU="ssh_add"
 	read -r -p "$(echo -e 'Please enter the username you would like to use for this session:\n')" username
@@ -109,4 +98,15 @@ invalid_input() {
 	fi
 	}
 
+	while getopts ahrsv option
+		do
+			case "$option" in
+				a ) ssh_add;;
+				h ) help; exit;;
+				r ) echo "Option 'r' read successfully."; exit;;
+				s ) ssh_start;;
+				v ) echo $VERSION; exit;;
+			esac
+		done
+		
 main_menu
