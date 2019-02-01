@@ -123,7 +123,7 @@ invalid_input() {
 		do
 			case "$option" in
 				a ) ssh_add;;
-				h ) help; exit 0;;
+				h ) echo $HELP; exit 0;;
 				r ) ssh_remove;;
 				s ) ssh_start;;
 				v ) echo $VERSION; exit 0;;
