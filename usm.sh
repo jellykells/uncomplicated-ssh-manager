@@ -89,11 +89,6 @@ menu_check() {
 	$LASTMENU
 	}
 
-close() {
-	return 0;
-	exit;
-	}
-
 input_attempts_max() {
 	echo -e "Maximum input attempts exceeded.\nPlease ensure all your fingers are intact and try again, User.";
 	exit 0;
