@@ -98,6 +98,8 @@ invalid_input() {
 	fi
 	}
 
+main_menu
+
 	while getopts ahrsv option
 		do
 			case "$option" in
@@ -108,5 +110,3 @@ invalid_input() {
 				v ) echo $VERSION; close;;
 			esac
 		done
-
-main_menu
