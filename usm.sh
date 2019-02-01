@@ -102,10 +102,10 @@ invalid_input() {
 		do
 			case "$option" in
 				a ) ssh_add;;
-				h ) help; close;;
-				r ) echo "Option 'r' read successfully."; close;;
+				h ) help; exit 0;;
+				r ) echo "Option 'r' read successfully."; exit 0;;
 				s ) ssh_start;;
-				v ) echo $VERSION; close;;
+				v ) echo $VERSION; exit 0;;
 			esac
 		done
 
