@@ -33,9 +33,9 @@ while getopts ahrsv option
 	do
 		case "$option" in
 			a ) ssh_add;;
-			h ) help;;
+			h ) help; exit;;
 			r ) echo "Option 'r' read successfully."; exit;;
-			s ) echo "Option 's' read successfully."; exit;;
+			s ) ssh_start;;
 			v ) echo $VERSION; exit;;
 		esac
 	done
