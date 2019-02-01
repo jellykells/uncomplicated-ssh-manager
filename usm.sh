@@ -75,11 +75,12 @@ ssh_remove() {
 
 main_menu() {
 	LASTMENU="main_menu"
-	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start an SSH instance.\n[2] Add an SSH instance.\n[3] Exit.\n\b')" selection
+	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start an SSH instance.\n[2] Add an SSH instance.\n[3] Remove an SSH instance.\n[4] Exit.\n\b')" selection
 	case "$selection" in
 		[1] ) ssh_start;;
 		[2] ) ssh_add;;
-		[3] ) close;;
+		[3] ) ssh_remove;;
+		[4] ) close;;
 		*   ) invalid_input;;
 	esac
 }
