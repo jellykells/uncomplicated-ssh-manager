@@ -1,6 +1,24 @@
 #!/bin/bash
 ##Currently unused include
 #. $HOME/Documents/sshmanagerfunctions.sh
+VERSION="Uncomplicated SSH Manager v1.0"
+HELP="Usage: usm [OPTION…]\n
+'Uncomplicated SSH Manager' saves multiple SSH instances for simple management
+and connection. It can be run with or without options.
+
+Examples:
+  usm		# Start the program and load the main menu.
+  usm -h	# Display this help information.
+  usm -s	# Skip main menu and load SSH instance selection.
+
+ Quick function options:
+
+ 	-a	add an instance
+ 	-h	displays help info
+ 	-r	remove an instance
+ 	-s	loads instance selection
+ 	-v	displays version info
+"
 DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
@@ -28,8 +46,6 @@ read -a instances <"$INSTANCES_FILE"
 #ARRAY_SIZE=${#instances[*]}
 #echo "Array size is "$ARRAY_SIZE
 
-DIR="$(cd "$(dirname "$0")" && pwd)"
-
 ssh_add() {
 	LASTMENU="ssh_add"
 	read -r -p "$(echo -e 'Please enter the username you would like to use for this session:\n')" username
@@ -49,13 +65,39 @@ ssh_add() {
 	esac
 }
 
+ssh_remove() {
+	LASTMENU="ssh_remove"
+	echo 'Please select an SSH instance to remove, User:'
+	for i in ${!instances[*]}; do
+		echo [$i] ${instances[$i]}
+	done
+	read -r -p "" selection
+	if [[ "$selection" < "${#instances[@]}" ]]; then
+		read -r -p "Delete '${instances[$selection]}'? (Y/n)" answer
+		case "$answer" in
+			[Nn]|[Nn][Oo] ) menu_check;;
+			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/${instances[$selection]}} );
+													echo "${instances[*]}" > "$HOME/.usm/data/instances";
+													read -r -p "Instance removed. Remove another? (Y/n)" answer;
+													case "$answer" in
+														[yY]|[Yy][Ee][Ss] ) menu_check;;
+														[Nn]|[Nn][Oo] ) main_menu;;
+														* ) invalid_input;;
+													esac;;
+		esac
+	else
+		invalid_input
+	fi
+}
+
 main_menu() {
 	LASTMENU="main_menu"
-	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start an SSH instance.\n[2] Add an SSH instance.\n[3] Exit.\n\b')" selection
+	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start…\n[2] Add…\n[3] Remove…\n[4] Exit.\n\b')" selection
 	case "$selection" in
 		[1] ) ssh_start;;
 		[2] ) ssh_add;;
-		[3] ) close;;
+		[3] ) ssh_remove;;
+		[4] ) exit 0;;
 		*   ) invalid_input;;
 	esac
 }
@@ -64,14 +106,9 @@ menu_check() {
 	$LASTMENU
 	}
 
-close() {
-	return 0;
-	exit;
-	}
-
 input_attempts_max() {
 	echo -e "Maximum input attempts exceeded.\nPlease ensure all your fingers are intact and try again, User.";
-	close;
+	exit 0;
 	}
 
 ssh_start() {
@@ -81,8 +118,8 @@ ssh_start() {
 		echo [$i] ${instances[$i]}
 	done
 	read -r -p "" selection
-	if (( "$selection" < "${#instances[*]}" )); then
-		echo -e "Starting session... \n"
+	if [[ "$selection" < "${#instances[@]}" ]]; then
+		echo -e "Starting session… \n"
 		ssh "${instances[$selection]}"
 	else
 		invalid_input
@@ -98,5 +135,16 @@ invalid_input() {
 		menu_check;
 	fi
 	}
+
+	while getopts ahrsv option
+		do
+			case "$option" in
+				a ) ssh_add;;
+				h ) echo -e "$HELP"; exit 0;;
+				r ) ssh_remove;;
+				s ) ssh_start;;
+				v ) echo $VERSION; exit 0;;
+			esac
+		done
 
 main_menu
