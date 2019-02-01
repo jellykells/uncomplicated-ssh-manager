@@ -58,7 +58,7 @@ ssh_remove() {
 	if [[ "$selection" < "${#instances[*]}" ]]; then
 		read -r -p "Delete '${instances[$selection]}'? (Y/n)" answer
 		case "$answer" in
-			[yY]|[Yy][Ee][Ss] ) instances=( "${instances[@]/$selection}" ) && echo "Instance removed.";;
+			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/$selection} ) && echo "Instance removed.";;
 			[Nn]|[Nn][Oo] ) menu_check;;
 		esac
 	else
