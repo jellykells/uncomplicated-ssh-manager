@@ -99,7 +99,7 @@ ssh_start() {
 		echo [$i] ${instances[$i]}
 	done
 	read -r -p "" selection
-	if [[ "$selection" < "${#instances[*]}" ]]; then
+	if [[ "$selection" < "${#instances[@]}" ]]; then
 		echo -e "Starting session... \n"
 		ssh "${instances[$selection]}"
 	else
