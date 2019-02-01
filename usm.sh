@@ -48,6 +48,24 @@ ssh_add() {
 	esac
 }
 
+ssh_remove() {
+	LASTMENU="ssh_remove"
+	echo 'Please select an SSH instance to remove, User:'
+	for i in ${!instances[*]}; do
+		echo [$i] ${instances[$i]}
+	done
+	read -r -p "" selection
+	if [[ "$selection" < "${#instances[*]}" ]]; then
+		read -r -p "Delete '${instances[$selection]}'? (Y/n) \n" answer
+		case "$answer" in
+			[yY]|[Yy][Ee][Ss] ) instances=( "${instances[@]/$selection}" ) && echo "Instance removed.";;
+			[Nn]|[Nn][Oo] ) menu_check;;
+		esac
+	else
+		invalid_input
+	fi
+}
+
 main_menu() {
 	LASTMENU="main_menu"
 	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start an SSH instance.\n[2] Add an SSH instance.\n[3] Exit.\n\b')" selection
