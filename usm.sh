@@ -2,6 +2,23 @@
 ##Currently unused include
 #. $HOME/Documents/sshmanagerfunctions.sh
 VERSION="Uncomplicated SSH Manager v1.0"
+HELP="Usage: usm [OPTION…]\n
+'Uncomplicated SSH Manager' saves multiple SSH instances for simple management
+and connection. It can be run with or without options.
+
+Examples:
+  usm		# Start the program and load the main menu.
+  usm -h	# Display this help information.
+  usm -s	# Skip main menu and load SSH instance selection.
+
+ Quick function options:
+
+ 	-a	add an instance
+ 	-h	displays help info
+ 	-r	remove an instance
+ 	-s	loads instance selection
+ 	-v	displays version info
+"
 DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
@@ -123,7 +140,7 @@ invalid_input() {
 		do
 			case "$option" in
 				a ) ssh_add;;
-				h ) help; exit 0;;
+				h ) echo -e "$HELP"; exit 0;;
 				r ) ssh_remove;;
 				s ) ssh_start;;
 				v ) echo $VERSION; exit 0;;
