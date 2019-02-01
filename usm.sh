@@ -60,6 +60,7 @@ ssh_remove() {
 		case "$answer" in
 			[Nn]|[Nn][Oo] ) menu_check;;
 			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/${instances[$selection]}} );
+													echo "${instances[*]}" > "$HOME/.usm/data/instances";
 													read -r -p "Instance removed. Remove another? (Y/n)" answer;
 													case "$answer" in
 														[yY]|[Yy][Ee][Ss] ) menu_check;;
