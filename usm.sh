@@ -75,7 +75,7 @@ ssh_remove() {
 
 main_menu() {
 	LASTMENU="main_menu"
-	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start.\n[2] Add.\n[3] Remove.\n[4] Exit.\n\b')" selection
+	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start…\n[2] Add…\n[3] Remove…\n[4] Exit.\n\b')" selection
 	case "$selection" in
 		[1] ) ssh_start;;
 		[2] ) ssh_add;;
