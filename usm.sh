@@ -1,7 +1,7 @@
 #!/bin/bash
 ##Currently unused include
 #. $HOME/Documents/sshmanagerfunctions.sh
-VERSION="Uncomplicated SSH Manager v1.0"
+VERSION="Uncomplicated SSH Manager v1.1.1"
 HELP="Usage: usm [OPTION…]\n
 'Uncomplicated SSH Manager' saves multiple SSH instances for simple management
 and connection. It can be run with or without options.
@@ -77,13 +77,13 @@ ssh_remove() {
 		case "$answer" in
 			[Nn]|[Nn][Oo] ) menu_check;;
 			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/${instances[$selection]}} );
-													echo "${instances[*]}" > "$HOME/.usm/data/instances";
-													read -r -p "Instance removed. Remove another? (Y/n)" answer;
-													case "$answer" in
-														[yY]|[Yy][Ee][Ss] ) menu_check;;
-														[Nn]|[Nn][Oo] ) main_menu;;
-														* ) invalid_input;;
-													esac;;
+			echo "${instances[*]}" > "$HOME/.usm/data/instances";
+			read -r -p "Instance removed. Remove another? (Y/n)" answer;
+			case "$answer" in
+				[yY]|[Yy][Ee][Ss] ) menu_check;;
+				[Nn]|[Nn][Oo] ) main_menu;;
+				* ) invalid_input;;
+			esac;;
 		esac
 	else
 		invalid_input
@@ -136,15 +136,15 @@ invalid_input() {
 	fi
 	}
 
-	while getopts ahrsv option
-		do
-			case "$option" in
-				a ) ssh_add;;
-				h ) echo -e "$HELP"; exit 0;;
-				r ) ssh_remove;;
-				s ) ssh_start;;
-				v ) echo $VERSION; exit 0;;
-			esac
-		done
+while getopts ahrsv option
+	do
+		case "$option" in
+			a ) ssh_add;;
+			h ) echo -e "$HELP"; exit 0;;
+			r ) ssh_remove;;
+			s ) ssh_start;;
+			v ) echo $VERSION; exit 0;;
+		esac
+done
 
 main_menu
