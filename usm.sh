@@ -1,7 +1,7 @@
 #!/bin/bash
 ##Currently unused include
 #. $HOME/Documents/sshmanagerfunctions.sh
-VERSION="Uncomplicated SSH Manager v1.0"
+VERSION="Uncomplicated SSH Manager v1.1.1"
 HELP="Usage: usm [OPTION…]\n
 'Uncomplicated SSH Manager' saves multiple SSH instances for simple management
 and connection. It can be run with or without options.
