@@ -136,15 +136,15 @@ invalid_input() {
 	fi
 	}
 
-	while getopts ahrsv option
-		do
-			case "$option" in
-				a ) ssh_add;;
-				h ) echo -e "$HELP"; exit 0;;
-				r ) ssh_remove;;
-				s ) ssh_start;;
-				v ) echo $VERSION; exit 0;;
-			esac
-		done
+while getopts ahrsv option
+	do
+		case "$option" in
+			a ) ssh_add;;
+			h ) echo -e "$HELP"; exit 0;;
+			r ) ssh_remove;;
+			s ) ssh_start;;
+			v ) echo $VERSION; exit 0;;
+		esac
+done
 
 main_menu
