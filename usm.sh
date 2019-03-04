@@ -57,10 +57,10 @@ ssh_add() {
 	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
 	#sed -i -e 2's/$/ "$address"' "$HOME/.usm/instances"
 	echo "${instances[*]}" > "$HOME/.usm/data/instances"
-	read -r -p "$(echo -e 'Instance added. Add another? (Y/n)')" answer
+	read -n1 -r -p "$(echo -e 'Instance added. Add another? (Y/n)')" answer
 	case "$answer" in
-		[yY]|[Yy][Ee][Ss] ) menu_check;;
-		[Nn]|[Nn][Oo] ) main_menu;;
+		[yY]|[Yy][Ee][Ss] ) echo; menu_check;;
+		[Nn]|[Nn][Oo] ) echo; main_menu;;
 		* ) invalid_input;;
 	esac
 }
@@ -71,17 +71,17 @@ ssh_remove() {
 	for i in ${!instances[*]}; do
 		echo [$i] ${instances[$i]}
 	done
-	read -r -p "" selection
+	read -n1 -r -p "" selection
 	if [[ "$selection" < "${#instances[@]}" ]]; then
-		read -r -p "Delete '${instances[$selection]}'? (Y/n)" answer
+		read -n1 -r -p "$(echo -e "\nDelete '${instances[$selection]}'? (Y/n)")" answer
 		case "$answer" in
-			[Nn]|[Nn][Oo] ) menu_check;;
+			[Nn]|[Nn][Oo] ) echo; menu_check;;
 			[yY]|[Yy][Ee][Ss] ) instances=( ${instances[@]/${instances[$selection]}} );
 			echo "${instances[*]}" > "$HOME/.usm/data/instances";
-			read -r -p "Instance removed. Remove another? (Y/n)" answer;
+			read -n1 -r -p "$(echo -e '\nInstance removed. Remove another? (Y/n)')" answer;
 			case "$answer" in
-				[yY]|[Yy][Ee][Ss] ) menu_check;;
-				[Nn]|[Nn][Oo] ) main_menu;;
+				[yY]|[Yy][Ee][Ss] ) echo; menu_check;;
+				[Nn]|[Nn][Oo] ) echo; main_menu;;
 				* ) invalid_input;;
 			esac;;
 		esac
@@ -92,12 +92,12 @@ ssh_remove() {
 
 main_menu() {
 	LASTMENU="main_menu"
-	read -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start…\n[2] Add…\n[3] Remove…\n[4] Exit.\n\b')" selection
+	read -n1 -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start…\n[2] Add…\n[3] Remove…\n[4] Exit.\n\b')" selection
 	case "$selection" in
-		[1] ) ssh_start;;
-		[2] ) ssh_add;;
-		[3] ) ssh_remove;;
-		[4] ) exit 0;;
+		[1] ) echo; ssh_start;;
+		[2] ) echo; ssh_add;;
+		[3] ) echo; ssh_remove;;
+		[4] ) echo; exit 0;;
 		*   ) invalid_input;;
 	esac
 }
@@ -107,7 +107,7 @@ menu_check() {
 	}
 
 input_attempts_max() {
-	echo -e "Maximum input attempts exceeded.\nPlease ensure all your fingers are intact and try again, User.";
+	echo -e "\nMaximum input attempts exceeded.\nPlease ensure all your fingers are intact and try again, User.";
 	exit 0;
 	}
 
@@ -117,9 +117,9 @@ ssh_start() {
 	for i in ${!instances[*]}; do
 		echo [$i] ${instances[$i]}
 	done
-	read -r -p "" selection
+	read -n1 -r -p "" selection
 	if [[ "$selection" < "${#instances[@]}" ]]; then
-		echo -e "Starting session… \n"
+		echo -e "\nStarting session… \n"
 		ssh "${instances[$selection]}"
 	else
 		invalid_input
@@ -131,7 +131,7 @@ invalid_input() {
 	if [[ "$INPUT_ATTEMPTS" -eq "$MAX_ATTEMPTS" ]]; then
 		input_attempts_max;
 	else
-		echo "Invalid input. Please try again.";
+		echo -e "\nInvalid input. Please try again.";
 		menu_check;
 	fi
 	}
@@ -144,6 +144,7 @@ while getopts ahrsv option
 			r ) ssh_remove;;
 			s ) ssh_start;;
 			v ) echo $VERSION; exit 0;;
+      * ) echo -e "Use option '-h' to view help."; exit 0;;
 		esac
 done
 
