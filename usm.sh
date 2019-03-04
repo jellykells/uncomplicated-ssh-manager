@@ -115,7 +115,7 @@ input_attempts_max() {
 ssh_start() {
 	LASTMENU=ssh_start
 	echo 'Please select an SSH instance, User:'
-	for i in ${!instances[*]}; do
+	for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
 	read -n1 -r -p "" selection
