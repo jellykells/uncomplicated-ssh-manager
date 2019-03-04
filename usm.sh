@@ -36,6 +36,7 @@ if [ ! -d "$HOME/.usm/data" ]; then
 fi
 if [ ! -e "$HOME/.usm/data/instances" ]; then
 	touch $HOME/.usm/data/instances
+  echo "dummyentry" >> "$INSTANCES_FILE"
 fi
 
 declare -a instances
@@ -68,7 +69,7 @@ ssh_add() {
 ssh_remove() {
 	LASTMENU="ssh_remove"
 	echo 'Please select an SSH instance to remove, User:'
-	for i in ${!instances[*]}; do
+  for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
 	read -n1 -r -p "" selection
@@ -114,7 +115,7 @@ input_attempts_max() {
 ssh_start() {
 	LASTMENU=ssh_start
 	echo 'Please select an SSH instance, User:'
-	for i in ${!instances[*]}; do
+	for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
 	read -n1 -r -p "" selection
