@@ -69,7 +69,7 @@ ssh_add() {
 ssh_remove() {
 	LASTMENU="ssh_remove"
 	echo 'Please select an SSH instance to remove, User:'
-	for i in ${!instances[*]}; do
+  for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
 	read -n1 -r -p "" selection
