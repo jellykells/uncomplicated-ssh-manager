@@ -36,7 +36,7 @@ if [ ! -d "$HOME/.usm/data" ]; then
 fi
 if [ ! -e "$HOME/.usm/data/instances" ]; then
 	touch $HOME/.usm/data/instances
-  echo "dummyentry" >> ""$INSTANCES_FILE"
+  echo "dummyentry" >> "$INSTANCES_FILE"
 fi
 
 declare -a instances
