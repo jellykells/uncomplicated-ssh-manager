@@ -68,7 +68,7 @@ ssh_add() {
 
 ssh_remove() {
 	LASTMENU="ssh_remove"
-	echo 'Please select an SSH instance to remove, User:'
+	echo -e 'Please select an SSH instance to remove, User:\n'
   for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
@@ -114,7 +114,7 @@ input_attempts_max() {
 
 ssh_start() {
 	LASTMENU=ssh_start
-	echo 'Please select an SSH instance, User:'
+	echo -e 'Please select an SSH instance, User:\n'
 	for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
