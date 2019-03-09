@@ -55,7 +55,7 @@ ssh_add() {
 	read -r -p "$(echo -e 'Please enter the IP address you would like to use for this session:\n')" address
 	ADDRESS=$address
   read -r -p "$(echo -e 'Please enter the port number you would like to use for this session(None for default):\n')" port
-  if "$port" = ""; then PORT=$port; fi
+  if [ "$port" = "" ]; then PORT=$port; fi
 	instances+=("$USERNAME"@"$ADDRESS" -p "$PORT")
 	##Currently unused alternative method
 	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
