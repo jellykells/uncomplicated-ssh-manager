@@ -23,6 +23,7 @@ DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
 INSTANCES_FILE="$HOME/.usm/data/instances"
+PORT=22
 
 if [ ! -d "$HOME/.usm" ]; then
 	mkdir $HOME/.usm
