@@ -74,9 +74,9 @@ ssh_add() {
 	##Currently unused alternative method
 	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
 	#sed -i -e 2's/$/ "$address"' "$HOME/.usm/instances"
-  #save the array back to the instances file '>' overwrites the contents ('>>' would only append it)
+  #save the array back to the instances file. '>' overwrites the contents ('>>' would only append it)
 	echo "${instances[*]}" > "$HOME/.usm/data/instances"
-  #if the user wants to ad another instance now they can quickly return to the add menu here
+  #if the user wants to add another instance now they can quickly return to the add menu here
 	read -n1 -r -p "$(echo -e 'Instance added. Add another? (Y/n)')" answer
 	case "$answer" in
     #'[yY]|[Yy][Ee][Ss]' and '[Nn]|[Nn][Oo]' allow the user to enter 'yes', 'no', 'y', or 'n' without regard for capitalization
