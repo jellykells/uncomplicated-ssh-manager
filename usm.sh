@@ -23,6 +23,7 @@ DIR="$(cd "$(dirname "$0")"&& pwd)"
 INPUT_ATTEMPTS=0
 MAX_ATTEMPTS=3
 INSTANCES_FILE="$HOME/.usm/data/instances"
+PORT=22
 
 if [ ! -d "$HOME/.usm" ]; then
 	mkdir $HOME/.usm
@@ -49,12 +50,13 @@ read -a instances <"$INSTANCES_FILE"
 
 ssh_add() {
 	LASTMENU="ssh_add"
-  clear
 	read -r -p "$(echo -e 'Please enter the username you would like to use for this session:\n')" username
 	USERNAME=$username
 	read -r -p "$(echo -e 'Please enter the IP address you would like to use for this session:\n')" address
 	ADDRESS=$address
-	instances+=("$USERNAME"@"$ADDRESS")
+  read -r -p "$(echo -e 'Please enter the port number you would like to use for this session(None for default):\n')" port
+  if [ "$port" != "" ]; then PORT=$port; fi
+	instances+=("$USERNAME"@"$ADDRESS":"$PORT")
 	##Currently unused alternative method
 	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
 	#sed -i -e 2's/$/ "$address"' "$HOME/.usm/instances"
@@ -69,7 +71,6 @@ ssh_add() {
 
 ssh_remove() {
 	LASTMENU="ssh_remove"
-  clear
 	echo -e 'Please select an SSH instance to remove, User:\n'
   for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
@@ -95,7 +96,6 @@ ssh_remove() {
 
 main_menu() {
 	LASTMENU="main_menu"
-  clear
 	read -n1 -r -p "$(echo -e 'Please select an option, User: \n\n[1] Start…\n[2] Add…\n[3] Remove…\n[4] Exit.\n\b')" selection
 	case "$selection" in
 		[1] ) echo; ssh_start;;
@@ -117,16 +117,16 @@ input_attempts_max() {
 
 ssh_start() {
 	LASTMENU=ssh_start
-  clear
 	echo -e 'Please select an SSH instance, User:\n'
 	for ((i=1;i<${#instances[@]};i++)); do
 		echo [$i] ${instances[$i]}
 	done
 	read -n1 -r -p "" selection
 	if [[ "$selection" < "${#instances[@]}" ]]; then
-    clear
-		echo -e "\nStarting session… \n"
-		ssh "${instances[$selection]}"
+    SESSION="$(echo "${instances[$selection]}" | awk -F ':' '{print $1}')"
+    PORT="$(echo "${instances[$selection]}" | awk -F ':' '{print $2}')"
+    echo -e "\nStarting session… \n"
+		ssh "$SESSION" -p "$PORT"
 	else
 		invalid_input
 	fi
