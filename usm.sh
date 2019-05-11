@@ -56,7 +56,7 @@ ssh_add() {
 	ADDRESS=$address
   read -r -p "$(echo -e 'Please enter the port number you would like to use for this session(None for default):\n')" port
   if [ "$port" = "" ]; then PORT=$port; fi
-	instances+=("$USERNAME"@"$ADDRESS" -p "$PORT")
+	instances+=("$USERNAME"@"$ADDRESS":"$PORT")
 	##Currently unused alternative method
 	#sed -i -e 1's/$/ "$username"' "$HOME/.usm/instances"
 	#sed -i -e 2's/$/ "$address"' "$HOME/.usm/instances"
@@ -123,8 +123,10 @@ ssh_start() {
 	done
 	read -n1 -r -p "" selection
 	if [[ "$selection" < "${#instances[@]}" ]]; then
-		echo -e "\nStarting session… \n"
-		ssh "${instances[$selection]}"
+    SESSION="$(echo "${instances[$selection]}" | awk -F ':' '{print $1}')"
+    PORT="$(echo "${instances[$selection]}" | awk -F ':' '{print $2}')"
+    echo -e "\nStarting session… \n"
+		ssh "$SESSION" -p "$PORT"
 	else
 		invalid_input
 	fi
