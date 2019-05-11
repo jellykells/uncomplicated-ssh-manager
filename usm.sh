@@ -29,7 +29,7 @@ INSTANCES_FILE="$HOME/.usm/data/instances"
 #set the default port value
 PORT=22
 
-#if the necessary folders and files are not necessary, create them
+#if the necessary folders and files do not exist, create them
 if [ ! -d "$HOME/.usm" ]; then
 	mkdir $HOME/.usm
 fi
